@@ -20,15 +20,18 @@
             <button class="switch-btn active" id="show-cycle-chart">График циклов</button>
             <button class="switch-btn" id="show-correlation-chart">Анализ корреляции</button>
         </div>
-
-        <div class="main-content">
+        <div class="date-pick">
+            <span>Выберите дату:</span>
+            <input type="date" class="date-input" id="center-date">
+        </div>
+        <div class="main-content" style="overflow: hidden">
             <div class="charts-section">
                 <div class="chart-wrapper" id="cycle-chart-wrapper">
                     <div class="controls">
-                        <span>Выберите дату:</span>
-                        <input type="date" id="center-date" class="date-input">
                         <h3>Выберите участниц для анализа:</h3>
                         <div class="checkbox-group" id="checkboxes"></div>
+                        <button id="selectall">Выбрать всех</button>
+                        <button id="deleteall">Снять выбор</button>
                     </div>
                     <div class="chart-container">
                         <canvas id="cycle-chart"></canvas>
@@ -53,11 +56,6 @@
                 <div class="container">
                     <div class="date-top-right" id="today-date"></div>
                     <h1>Лунные новости</h1>
-
-                    <div class="date-input-container">
-                        <input type="date" class="date-input" id="date-picker">
-                    </div>
-
                     <div class="section">
                         <div class="section-title">Менструация</div>
                         <ul id="menstruation-list"></ul>

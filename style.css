@@ -44,7 +44,10 @@
     /* Лунное свечение */
 }
 
-
+.button-group,
+.buttons {
+    margin-top: 30px;
+}
 
 .chart-container {
     position: relative;
@@ -97,7 +100,7 @@
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(157, 124, 255, 0.1);
-    margin-top: 20px;
+    margin: 30px;
     border: 1px solid var(--bg-lth);
     color: var(--txt-lth);
     font-size: 0.95em;
@@ -195,12 +198,11 @@
     position: relative;
     overflow: visible;
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(157, 124, 255, 0.2);
     animation: fadeIn 0.8s ease-out;
 }
 
 .controls {
-    margin: 20px 0;
+    margin-bottom: 20px;
     padding: 25px;
     background: rgba(42, 33, 57, 0.9);
     border-radius: 16px;
@@ -218,12 +220,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     cursor: pointer;
-}
-
-.date-input-container {
-    position: relative;
-    margin: 30px auto;
-    width: fit-content;
+    margin: 15px;
 }
 
 .date-input:focus {
@@ -286,17 +283,20 @@
 
 .main-content {
     display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
     gap: 20px;
     width: 100%;
     max-width: 1400px;
-    margin: 0 auto;
+    align-items: center;
 }
 
 .moon-news-section {
     width: 400px;
     margin-top: -20px;
+}
+
+.moon-label img {
+    -webkit-mask-image: radial-gradient(circle, white 60%, transparent 61%);
+    mask-image: radial-gradient(circle, white 60%, transparent 61%);
 }
 
 .moon-phase {
@@ -339,6 +339,7 @@
     color: var(--txt-lth);
     display: flex;
     align-items: center;
+    flex-direction: column-reverse;
 }
 
 .section-title::before {
@@ -534,16 +535,43 @@
     background: #ff4d6d;
 }
 
+.moon-label {
+    position: absolute;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+}
+
 #ovulation-list .section-title::before {
     background: #ff9500;
 }
 
 body {
+    overflow: auto;
+    scrollbar-width: 0px;
+    /* Firefox */
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: radial-gradient(ellipse at center, var(--bg-md) 0%, var(--bg-drk) 100%);
     color: var(--txt-lth);
     min-height: 100vh;
+    user-select: none;
+    /* Стандартное */
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE/Edge */
+}
+
+body::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Edge, Safari */
 }
 
 button {
@@ -589,6 +617,10 @@ h1::after {
     border-radius: 50%;
     z-index: -1;
     animation: rays 6s linear infinite;
+}
+
+h3 {
+    margin: 10px 0;;
 }
 
 li {
@@ -640,22 +672,5 @@ ul {
     gap: 12px;
     position: relative;
     overflow: visible;
+    justify-content: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Стили для анализа корреляции */
-
-
-
-/* Чекбоксы */
