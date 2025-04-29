@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ менструальных циклов</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+</head>
+
+<body>
+    <div class="main-container">
+        <h1>🌙 Анализ менструальных циклов</h1>
+
+        <div class="chart-switcher">
+            <button class="switch-btn active" id="show-cycle-chart">График циклов</button>
+            <button class="switch-btn" id="show-correlation-chart">Анализ корреляции</button>
+        </div>
+
+        <div class="main-content">
+            <div class="charts-section">
+                <div class="chart-wrapper" id="cycle-chart-wrapper">
+                    <div class="controls">
+                        <span>Выберите дату:</span>
+                        <input type="date" id="center-date" class="date-input">
+                        <h3>Выберите участниц для анализа:</h3>
+                        <div class="checkbox-group" id="checkboxes"></div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cycle-chart"></canvas>
+                        <div id="overlay"></div>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper correlation" id="correlation-chart-wrapper" style="display: none;">
+                    <div class="controls">
+                        <h3>Выберите участниц для анализа:</h3>
+                        <div class="checkbox-group" id="participants-checkbox"></div>
+                        <button id="select-all">Выбрать всех</button>
+                        <button id="deselect-all">Снять выбор</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="correlation-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="moon-news-section">
+                <div class="container">
+                    <div class="date-top-right" id="today-date"></div>
+                    <h1>Лунные новости</h1>
+
+                    <div class="date-input-container">
+                        <input type="date" class="date-input" id="date-picker">
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Менструация</div>
+                        <ul id="menstruation-list"></ul>
+                        <div class="empty-state" id="menstruation-empty">Ни у кого нет менструации в этот день</div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Овуляция</div>
+                        <ul id="ovulation-list"></ul>
+                        <div class="empty-state" id="ovulation-empty">Ни у кого нет овуляции в этот день</div>
+                    </div>
+
+                    <div class="moon-phase" id="moon-phase">
+                        <div>Фаза луны: <span id="moon-phase-text">...</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="conclusion" id="conclusion"></div>
+</body>
+
+</html>
