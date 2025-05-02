@@ -11,9 +11,31 @@ const participantsData = [
   { name: 'Лима', lastPeriod: '2024-02-23', duration: 6, cycle: 28, color: "#FFFACD" }
 ];
 
+// ========== СИНХРОНИЗАЦИЯ ДАТ ==========
+function syncDates(dateValue) {
+  // Устанавливаем дату в обоих полях
+  document.getElementById('main-date').value = dateValue;
+  document.getElementById('modal-date').value = dateValue;
+
+  // Обновляем данные
+  updateDate();
+  drawCycleChart(dateValue);
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+  // Устанавливаем сегодняшнюю дату
+  const today = new Date().toISOString().split('T')[0];
+  syncDates(today);
+
+  // Обработчики для полей ввода даты
+  document.getElementById('main-date').addEventListener('change', (e) => syncDates(e.target.value));
+  document.getElementById('modal-date').addEventListener('change', (e) => syncDates(e.target.value));
+});
+
 // ========== Лунные новости ==========
 function updateDate() {
-  const today = new Date(document.getElementById('center-date').value || new Date());
+  const today = new Date(document.getElementById('main-date').value || new Date());
   const formattedDate = today.toLocaleDateString('ru-RU', {
     weekday: 'long',
     day: 'numeric',
@@ -49,10 +71,10 @@ function updateDate() {
       const li = document.createElement("li");
       const cycleDay = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
       li.innerHTML = `
-          <span class="emoji" style="color: #ff4d6d;">🩸</span>
-          ${p.name}
-          <div class="tooltip">${cycleDay} день цикла (${p.duration - cycleDay + 1} день менструации)</div>
-        `;
+            <span class="emoji" style="color: #ff4d6d;">🩸</span>
+            ${p.name}
+            <div class="tooltip">${cycleDay} день цикла (${p.duration - cycleDay + 1} день менструации)</div>
+          `;
       menstruationList.appendChild(li);
     }
 
@@ -61,10 +83,10 @@ function updateDate() {
       const li = document.createElement("li");
       const cycleDay = Math.floor((today - start) / (1000 * 60 * 60 * 24)) + 1;
       li.innerHTML = `
-          <span class="emoji" style="color: #ff8fcf;">🌸</span>
-          ${p.name}
-          <div class="tooltip">${cycleDay} день цикла (Овуляция)</div>
-        `;
+            <span class="emoji" style="color: #ff8fcf;">🌸</span>
+            ${p.name}
+            <div class="tooltip">${cycleDay} день цикла (Овуляция)</div>
+          `;
       ovulationList.appendChild(li);
     }
   });
@@ -92,11 +114,11 @@ function updateMoonPhase(date) {
   document.getElementById("moon-phase-text").textContent = `${phase.emoji} ${phase.name}`;
 }
 
-document.getElementById("center-date").addEventListener("change", updateDate);
+document.getElementById("main-date").addEventListener("change", updateDate);
 updateDate();
 
 // ========== График циклов ==========
-const AXIS_COLOR = 'rgba(0,0,0,.6)';
+const AXIS_COLOR = 'rgba(255, 255, 255, 0.3';
 const DAYS_RANGE = 31;
 const HALF_RANGE = Math.floor(DAYS_RANGE / 2);
 const PRE_SHIFT = 1;
@@ -207,7 +229,7 @@ const cycleChartCanvas = document.getElementById("cycle-chart");
 const cycleChartCtx = cycleChartCanvas.getContext("2d");
 const checkboxes = document.getElementById("checkboxes");
 const overlay = document.getElementById("overlay");
-const centerDateInput = document.getElementById("center-date");
+const centerDateInput = document.getElementById("main-date");
 
 function drawCycleChart(centerDateStr) {
   const centerDate = new Date(centerDateStr);
@@ -301,7 +323,7 @@ function drawCycleChart(centerDateStr) {
       },
       plugins: {
         legend: {
-          display: true
+          display: false
         },
         tooltip: {
           mode: 'nearest',
@@ -326,18 +348,10 @@ function drawCycleChart(centerDateStr) {
           border: { display: false }
         },
         y: {
-          grid: {
-            color: (ctx) => {
-              return ctx.tick.value === 0 ? '#9d7cff' :' #2a2139'; // красная линия на y=0
-            },
-            lineWidth: (ctx) => {
-              return ctx.tick.value === 0 ? 2 : 1; // потолще для y=0
-            }
-          },
           min: -1, max: 1.2,
           border: {
             display: true,
-            color: '#9d7cff',
+            color: AXIS_COLOR,
             width: 1.5
           }
         }
@@ -348,27 +362,50 @@ function drawCycleChart(centerDateStr) {
 }
 
 function setupCheckboxes() {
-  checkboxes.innerHTML = "";
-  participantsData.forEach(girl => {
-    const label = document.createElement("label");
+  const container = document.getElementById('checkboxes');
+  container.innerHTML = '';
+  
+  participantsData.forEach(participant => {
+    const label = document.createElement('label');
+    label.className = 'checkbox-label';
     label.innerHTML = `
-    <input type="checkbox" id="cb-${girl.name}" checked>
-    <span class="checkbox-custom"></span>
-    <span class="participant-name">${girl.name}</span>
-  `;
-
-    const checkbox = label.querySelector("input");
-    checkbox.addEventListener("change", () => {
-      drawCycleChart(centerDateInput.value);
-      updateCorrelationChart();
+      <input type="checkbox" id="cb-${participant.name}" checked>
+      <div class="color-marker" style="border-color: ${participant.color}"></div>
+      <span class="participant-name">${participant.name}</span>
+    `;
+    
+    const checkbox = label.querySelector('input');
+    const marker = label.querySelector('.color-marker');
+    
+    // Устанавливаем начальное состояние
+    if(checkbox.checked) {
+      marker.style.backgroundColor = participant.color;
+      marker.style.transform = 'scale(1.15)';
+    } else {
+      marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+      marker.style.transform = 'scale(1)';
+    }
+    
+    checkbox.addEventListener('change', function() {
+      if(this.checked) {
+        marker.style.backgroundColor = participant.color;
+        marker.style.transform = 'scale(1.15)';
+      } else {
+        marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+        marker.style.transform = 'scale(1)';
+      }
+      drawCycleChart(document.getElementById('main-date').value);
     });
-
-    checkboxes.appendChild(label);
+    
+    container.appendChild(label);
   });
 }
 
 centerDateInput.value = formatDate(new Date());
-centerDateInput.addEventListener("change", () => drawCycleChart(centerDateInput.value));
+centerDateInput.addEventListener("change", (e) => {
+    syncDates(e.target.value);
+    drawCycleChart(e.target.value);
+});
 
 setupCheckboxes();
 drawCycleChart(centerDateInput.value);
@@ -380,10 +417,8 @@ const participantsCheckbox = document.getElementById("participants-checkbox");
 const conclusionDiv = document.getElementById("conclusion");
 const selectAllBtn = document.getElementById("select-all");
 const deselectAllBtn = document.getElementById("deselect-all");
-const selectAll = document.getElementById('selectall');
-const deleteAll = document.getElementById('deleteall');
 
-const maxLag = 62;
+const maxLag = 65;
 const moonCycle = 29.5;
 const syncThreshold = 3;
 
@@ -411,7 +446,7 @@ let correlationChart = new Chart(correlationChartCtx, {
     },
     plugins: {
       legend: {
-        position: 'top',
+        display: false,
       },
       tooltip: {
         callbacks: {
@@ -426,7 +461,7 @@ let correlationChart = new Chart(correlationChartCtx, {
             type: 'line',
             xMin: moonCycle,
             xMax: moonCycle,
-            borderColor: '#9d7cff',
+            borderColor: 'rgb(255, 99, 132)',
             borderWidth: 1,
             borderDash: [6, 6],
             label: {
@@ -537,96 +572,96 @@ function createConclusion(analyses) {
   const selectedAverageCycle = analyses.reduce((sum, a) => sum + a.cycleLength, 0) / analyses.length;
 
   let conclusionHTML = `
-      <div class="general-conclusion">
-        <h3>Общий анализ (N=${analyses.length}):</h3>
-        <div class="metrics">
-            <p><strong>Средняя длина цикла:</strong> <span class="highlight">${selectedAverageCycle.toFixed(2)} дней</span> 
-            (диапазон ${Math.min(...analyses.map(a => a.cycleLength))}-${Math.max(...analyses.map(a => a.cycleLength))} дней)</p>
-            
-            <p><strong>Синхронизация с лунным циклом (29.5±${syncThreshold} дней):</strong>
-            <span class="highlight">${syncedCount} из ${analyses.length} (${syncPercentage}%)</span></p>
-        </div>
+        <div class="general-conclusion">
+          <h3>Общий анализ (N=${analyses.length}):</h3>
+          <div class="metrics">
+              <p><strong>Средняя длина цикла:</strong> <span class="highlight">${selectedAverageCycle.toFixed(2)} дней</span> 
+              (диапазон ${Math.min(...analyses.map(a => a.cycleLength))}-${Math.max(...analyses.map(a => a.cycleLength))} дней)</p>
+              
+              <p><strong>Синхронизация с лунным циклом (29.5±${syncThreshold} дней):</strong>
+              <span class="highlight">${syncedCount} из ${analyses.length} (${syncPercentage}%)</span></p>
+          </div>
 
-        <div class="statistical-analysis">
-            <h4>Статистический анализ:</h4>
-            <p>При равномерном распределении циклов в диапазоне ${Math.min(...analyses.map(a => a.cycleLength))}-${Math.max(...analyses.map(a => a.cycleLength))} дней:</p>
-            <ul>
-                <li>Ожидаемое количество случайных совпадений: <strong>${(analyses.length * 4 / 9).toFixed(1)}</strong></li>
-                <li>Фактическое количество совпадений: <strong>${syncedCount}</strong></li>
-            </ul>
-            ${syncedCount > (analyses.length * (syncThreshold * 2) / (Math.max(...analyses.map(a => a.cycleLength)) - Math.min(...analyses.map(a => a.cycleLength)))) ?
+          <div class="statistical-analysis">
+              <h4>Статистический анализ:</h4>
+              <p>При равномерном распределении циклов в диапазоне ${Math.min(...analyses.map(a => a.cycleLength))}-${Math.max(...analyses.map(a => a.cycleLength))} дней:</p>
+              <ul>
+                  <li>Ожидаемое количество случайных совпадений: <strong>${(analyses.length * 4 / 9).toFixed(1)}</strong></li>
+                  <li>Фактическое количество совпадений: <strong>${syncedCount}</strong></li>
+              </ul>
+              ${syncedCount > (analyses.length * (syncThreshold * 2) / (Math.max(...analyses.map(a => a.cycleLength)) - Math.min(...analyses.map(a => a.cycleLength)))) ?
       '<p class="significant">📊 <strong>Результат статистически значим</strong> (фактическое превышает ожидаемое)</p>' :
       '<p>📉 Результат не показывает статистической значимости</p>'}
+          </div>
+
+          <div class="interpretation">
+              <h4>Интерпретация результатов:</h4>
+              <div class="biological-factors">
+                  <h5>Биологические аспекты:</h5>
+                  <ul>
+                      <li><strong>Эволюционный контекст:</strong> Лунная синхронизация могла иметь адаптивное значение 
+                      в древних популяциях, но у современного человека доказательства остаются противоречивыми</li>
+                      
+                      <li><strong>Возможные пути влияния включают:</strong> 
+                          <ul>
+                              <li>Реакцию на изменение ночной освещенности</li>
+                              <li>Субтильные изменения геомагнитного поля</li>
+                              <li>Опосредованное влияние через циркадные ритмы</li>
+                          </ul>
+                      </li>
+                  </ul>
+              </div>
+
+              <div class="methodological-notes">
+                  <h5>Методологические замечания:</h5>
+                  <ul>
+                      <li>Выборка (N=9) недостаточна для статистически значимых выводов</li>
+                      <li>Отсутствует контроль внешних факторов (искусственное освещение, стресс)</li>
+                      <li>Не учитывалась индивидуальная вариабельность циклов</li>
+                  </ul>
+              </div>
+
+              <div class="comparison">
+                  <h5>Сравнение с литературными данными:</h5>
+                  <p>Согласно мета-анализу ${syncedCount > 0 ? 'наши результаты (44.4%) близки к данным' : 'наши результаты расходятся с данными'} 
+                  Clancy (2021), где 27-35% женщин демонстрировали лунную синхронизацию (p=0.12, 95% CI[0.24-0.48]).</p>
+              </div>
+          </div>
+
+          <div class="recommendations">
+              <h4>Направления дальнейшего исследования:</h4>
+              <ol>
+                  <li><strong>Контролируемое исследование </strong> с ежедневным мониторингом гормонального фона</li>
+                  <li><strong>Международная когорта </strong> с учетом географической широты</li>
+                  <li><strong>Долгосрочное наблюдение </strong> (12+ циклов) для выявления динамики</li>
+                  <li><strong>Слепой анализ </strong> с маскировкой лунных фаз при оценке</li>
+              </ol>
+              <p class="disclaimer">* Результаты требуют осторожной интерпретации ввиду ограничений выборки</p>
+          </div>
+
+          ${syncedCount > 0 ? `
+          <div class="participants-list">
+              <h4>Участницы с синхронизацией:</h4>
+              <p>${analyses.filter(a => a.isSynced).map(a => `
+                  <span class="synced-participant">${a.name} (${a.cycleLength} дней, r=${a.moonCorrelation.toFixed(3)})</span>
+              `).join(', ')}</p>
+          </div>` : ''}
         </div>
-
-        <div class="interpretation">
-            <h4>Интерпретация результатов:</h4>
-            <div class="biological-factors">
-                <h5>Биологические аспекты:</h5>
-                <ul>
-                    <li><strong>Эволюционный контекст:</strong> Лунная синхронизация могла иметь адаптивное значение 
-                    в древних популяциях, но у современного человека доказательства остаются противоречивыми</li>
-                    
-                    <li><strong>Возможные пути влияния включают:</strong> 
-                        <ul>
-                            <li>Реакцию на изменение ночной освещенности</li>
-                            <li>Субтильные изменения геомагнитного поля</li>
-                            <li>Опосредованное влияние через циркадные ритмы</li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="methodological-notes">
-                <h5>Методологические замечания:</h5>
-                <ul>
-                    <li>Выборка (N=9) недостаточна для статистически значимых выводов</li>
-                    <li>Отсутствует контроль внешних факторов (искусственное освещение, стресс)</li>
-                    <li>Не учитывалась индивидуальная вариабельность циклов</li>
-                </ul>
-            </div>
-
-            <div class="comparison">
-                <h5>Сравнение с литературными данными:</h5>
-                <p>Согласно мета-анализу ${syncedCount > 0 ? 'наши результаты (44.4%) близки к данным' : 'наши результаты расходятся с данными'} 
-                Clancy (2021), где 27-35% женщин демонстрировали лунную синхронизацию (p=0.12, 95% CI[0.24-0.48]).</p>
-            </div>
-        </div>
-
-        <div class="recommendations">
-            <h4>Направления дальнейшего исследования:</h4>
-            <ol>
-                <li><strong>Контролируемое исследование </strong> с ежедневным мониторингом гормонального фона</li>
-                <li><strong>Международная когорта </strong> с учетом географической широты</li>
-                <li><strong>Долгосрочное наблюдение </strong> (12+ циклов) для выявления динамики</li>
-                <li><strong>Слепой анализ </strong> с маскировкой лунных фаз при оценке</li>
-            </ol>
-            <p class="disclaimer">* Результаты требуют осторожной интерпретации ввиду ограничений выборки</p>
-        </div>
-
-        ${syncedCount > 0 ? `
-        <div class="participants-list">
-            <h4>Участницы с синхронизацией:</h4>
-            <p>${analyses.filter(a => a.isSynced).map(a => `
-                <span class="synced-participant">${a.name} (${a.cycleLength} дней, r=${a.moonCorrelation.toFixed(3)})</span>
-            `).join(', ')}</p>
-        </div>` : ''}
-      </div>
-      
-      <h3>Индивидуальные результаты:</h3>
-    `;
+        
+        <h3>Индивидуальные результаты:</h3>
+      `;
 
   analyses.forEach(analysis => {
     conclusionHTML += `
-          <div class="participant-info">
-              <p><strong>${analysis.name}</strong>: цикл ${analysis.cycleLength} дней</p>
-              <p>Корреляция с лунным циклом: ${analysis.moonCorrelation.toFixed(3)}</p>
-              <p>Максимальная корреляция (${analysis.maxCorrelation.toFixed(3)}) при лаге ${analysis.maxCorrelationLag} дней</p>
-              <p>${analysis.isSynced ?
+            <div class="participant-info">
+                <p><strong>${analysis.name}</strong>: цикл ${analysis.cycleLength} дней</p>
+                <p>Корреляция с лунным циклом: ${analysis.moonCorrelation.toFixed(3)}</p>
+                <p>Максимальная корреляция (${analysis.maxCorrelation.toFixed(3)}) при лаге ${analysis.maxCorrelationLag} дней</p>
+                <p>${analysis.isSynced ?
         '<span class="highlight">Синхронизация с лунным циклом</span>' :
         '<span>Нет синхронизации с лунным циклом</span>'}</p>
-          </div>
-      `;
+            </div>
+        `;
   });
 
   return conclusionHTML;
@@ -676,27 +711,66 @@ buttonGroup.appendChild(selectAllBtn);
 buttonGroup.appendChild(deselectAllBtn);
 participantsCheckbox.parentNode.insertBefore(buttonGroup, participantsCheckbox.nextSibling);
 
-// Оберните кнопки в контейнер (если его нет)
-const buttons = document.createElement('div');
-buttons.className = 'buttons';
-buttons.appendChild(selectAll);
-buttons.appendChild(deleteAll);
-checkboxes.parentNode.insertBefore(buttons, checkboxes.nextSibling);
-
-// Обновите HTML для чекбоксов в setupParticipantsCheckboxes():
 function setupParticipantsCheckboxes() {
-  participantsCheckbox.innerHTML = '';
+  const container = document.getElementById('participants-checkbox');
+  container.innerHTML = '';
+
   participantsData.forEach(participant => {
     const label = document.createElement('label');
+    label.className = 'checkbox-label';
     label.innerHTML = `
-    <input type="checkbox" id="${participant.name}" checked>
-    <span class="checkbox-custom"></span>
-    <span class="participant-name">${participant.name}</span>
-  `;
-    participantsCheckbox.appendChild(label);
-    label.querySelector('input').addEventListener('change', updateCorrelationChart);
+      <input type="checkbox" id="${participant.name}" checked>
+      <div class="color-marker" style="border-color: ${participant.color}"></div>
+      <span class="participant-name">${participant.name}</span>
+    `;
+
+    const checkbox = label.querySelector('input');
+    const marker = label.querySelector('.color-marker');
+
+    // Функция для обновления состояния маркера
+    const updateMarker = () => {
+      if (checkbox.checked) {
+        marker.style.backgroundColor = participant.color;
+        marker.style.transform = 'scale(1.15)';
+      } else {
+        marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+        marker.style.transform = 'scale(1)';
+      }
+    };
+
+    // Устанавливаем начальное состояние
+    updateMarker();
+
+    checkbox.addEventListener('change', () => {
+      updateMarker();
+      updateCorrelationChart();
+    });
+
+    container.appendChild(label);
   });
 }
+
+// В функции инициализации добавить:
+document.addEventListener('DOMContentLoaded', () => {
+  // ... остальной код инициализации
+
+  // Устанавливаем цвет для выбранных по умолчанию
+  setTimeout(() => {
+    document.querySelectorAll('#checkboxes input[checked], #participants-checkbox input[checked]').forEach(checkbox => {
+      const marker = checkbox.parentElement.querySelector('.color-marker');
+      if (marker) {
+        const color = participantsData.find(p =>
+          p.name === checkbox.id.replace('cb-', '') ||
+          p.name === checkbox.id
+        )?.color;
+        if (color) {
+          marker.style.backgroundColor = color;
+          marker.style.transform = 'scale(1.15)';
+        }
+      }
+    });
+  }, 50);
+});
 
 document.querySelectorAll('#participants-checkbox input').forEach(checkbox => {
   checkbox.addEventListener('change', updateCorrelationChart);
@@ -705,6 +779,14 @@ document.querySelectorAll('#participants-checkbox input').forEach(checkbox => {
 selectAllBtn.addEventListener('click', () => {
   document.querySelectorAll('#participants-checkbox input').forEach(checkbox => {
     checkbox.checked = true;
+    const marker = checkbox.parentElement.querySelector('.color-marker');
+    if (marker) {
+      const color = participantsData.find(p => p.name === checkbox.id)?.color;
+      if (color) {
+        marker.style.backgroundColor = color;
+        marker.style.transform = 'scale(1.15)';
+      }
+    }
   });
   updateCorrelationChart();
 });
@@ -712,22 +794,13 @@ selectAllBtn.addEventListener('click', () => {
 deselectAllBtn.addEventListener('click', () => {
   document.querySelectorAll('#participants-checkbox input').forEach(checkbox => {
     checkbox.checked = false;
+    const marker = checkbox.parentElement.querySelector('.color-marker');
+    if (marker) {
+      marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+      marker.style.transform = 'scale(1)';
+    }
   });
   updateCorrelationChart();
-});
-
-selectAll.addEventListener('click', () => {
-  document.querySelectorAll('#checkboxes input').forEach(checkbox => {
-    checkbox.checked = true;
-  });
-  drawCycleChart(centerDateInput.value);
-});
-
-deleteAll.addEventListener('click', () => {
-  document.querySelectorAll('#checkboxes input').forEach(checkbox => {
-    checkbox.checked = false;
-  });
-  drawCycleChart(centerDateInput.value);
 });
 
 setupParticipantsCheckboxes();
@@ -755,8 +828,85 @@ showCorrelationChartBtn.addEventListener('click', () => {
   document.getElementById('conclusion').style.display = 'block';
 });
 
-// Инициализация при загрузке
-window.addEventListener('load', () => {
-  setupParticipantsCheckboxes();
-  updateCorrelationChart();
+function openMoonModal() {
+  document.getElementById('moonModal').classList.add('active');
+  updateDate();
+}
+
+function closeMoonModal() {
+  document.getElementById('moonModal').classList.remove('active');
+}
+
+// Закрытие по клику вне окна
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('moonModal');
+  if (e.target === modal) {
+    closeMoonModal();
+  }
 });
+
+function openAnalysisModal() {
+  const modal = document.getElementById('analysisModal');
+  modal.classList.add('active');
+  document.getElementById('conclusion').innerHTML = conclusionDiv.innerHTML;
+  
+  // Добавляем обработчик для кнопки развертывания
+  document.getElementById('toggleExpandBtn').onclick = function() {
+      const modalContent = document.querySelector('#analysisModal .modal-content');
+      modalContent.classList.toggle('expanded');
+  };
+}
+
+function closeAnalysisModal() {
+  const modal = document.getElementById('analysisModal');
+  modal.classList.remove('active');
+  
+  // Сбрасываем состояние при закрытии
+  const content = document.querySelector('#conclusion .conclusion');
+  content.classList.remove('expanded');
+  document.getElementById('toggleExpandBtn').textContent = 'Развернуть';
+}
+
+// Показ сегодняшних событий в модальном окне
+function showTodayEvents() {
+  const today = new Date();
+  let events = [];
+
+  participantsData.forEach(p => {
+    // Логика определения событий
+    if (isMenstruating) events.push(`${p.name} - Менструация`);
+    if (isOvulating) events.push(`${p.name} - Овуляция`);
+  });
+
+  document.getElementById('todayEvents').innerHTML = events.length > 0
+    ? events.join('<br>')
+    : 'Сегодня нет активных событий';
+}
+
+
+function selectAllCycle() {
+  document.querySelectorAll('#checkboxes input').forEach(checkbox => {
+    checkbox.checked = true;
+    const marker = checkbox.parentElement.querySelector('.color-marker');
+    if (marker) {
+      const color = participantsData.find(p => p.name === checkbox.id.replace('cb-', ''))?.color;
+      if (color) {
+        marker.style.backgroundColor = color;
+        marker.style.transform = 'scale(1.15)';
+      }
+    }
+  });
+  drawCycleChart(centerDateInput.value);
+}
+
+function deselectAllCycle() {
+  document.querySelectorAll('#checkboxes input').forEach(checkbox => {
+    checkbox.checked = false;
+    const marker = checkbox.parentElement.querySelector('.color-marker');
+    if (marker) {
+      marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+      marker.style.transform = 'scale(1)';
+    }
+  });
+  drawCycleChart(centerDateInput.value);
+}
