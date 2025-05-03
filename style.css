@@ -1,15 +1,15 @@
 /* ===== Общие стили для контролов ===== */
 .controls {
-    background: #463535;
+    background: #443966;
     border-radius: 1rem;
     padding: 25px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 20px rgba(136, 100, 101, 0.15);
+    box-shadow: 0 4px 20px rgba(110, 100, 136, 0.219);
 } 
    
 
 .controls h3 {
-    color: #CE999B;
+    color: #F3F0FF;
     margin: 0 0 25px 0;
     font-size: 1.1em;
     font-weight: 700;
@@ -20,8 +20,8 @@
     font-size: 1em;
     border-radius: 12px;
     border: none;
-    background: #3e2e2e;
-    color: #FCB5B7;
+    background: #443966;
+    color: #F3F0FF;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     cursor: pointer;
@@ -35,13 +35,13 @@
 
 .date-input:focus {
     outline: none;
-    border-color: #CE999B;
-    box-shadow: 0 0 0 3px rgba(206, 153, 155, 0.3);
+    border-color: #F3F0FF;
+    box-shadow: 0 0 0 3px rgba(176, 153, 206, 0.3);
 }
 
 .date-input:hover {
-    border-color: #CE999B;
-    box-shadow: 0 4px 15px rgba(206, 153, 155, 0.2);
+    border-color: #F3F0FF;
+    box-shadow: 0 4px 15px rgba(0 0 0 / 23%);
 }
 
 .dates {
@@ -52,7 +52,7 @@
 }
 
 .date-top-right {
-    color: #3A2A2A;
+    color: #362d52;
 }
 
 .emoji {
@@ -62,27 +62,27 @@
 
 .empty-state {
     text-align: center;
-    color: #CE999B;
+    color: #F3F0FF;
     font-style: italic;
     padding: 20px;
     opacity: 0.8;
 }
 
 .general-conclusion {
-    background: rgba(206, 153, 155, 0.1);
+    background: rgba(172, 153, 206, 0.1);
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
-    border-left: 4px solid #546581;
+    border-left: 4px solid #1E1B2E;
 }
 
 .highlight {
     font-weight: bold;
-    color: #FCB5B7;
+    color: #F3F0FF;
 }
 
 .main-container {
-    background: #3A4A6B;
+    background: #2A2342;
     margin: 0 2rem;
     padding: 2rem;
     position: relative;
@@ -106,7 +106,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(26, 17, 17, 0.9);
+    background: rgba(19, 17, 26, 0.9);
     display: none;
     justify-content: center;
     align-items: center;
@@ -116,12 +116,12 @@
 }
 
 .modal-content {
-    background: #3A2A2A;
+    background: #362d52;
     padding: 2rem;
     border-radius: 1rem;
     max-width: 500px;
     width: 90%;
-    box-shadow: 0 0 30px rgba(136, 100, 101, 0.3);
+    box-shadow: 0 0 30px rgba(111 100 136 / 30%);
     position: relative;
     max-height: 90vh;
     overflow: hidden;
@@ -160,9 +160,9 @@
 .moon-phase {
     font-style: italic;
     text-align: center;
-    color: #CE999B;
+    color: #F3F0FF;
     font-size: 1.1em;
-    background: #3e2e2e;
+    background: #443966;
     padding: 15px;
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -171,14 +171,14 @@
 .participant-info {
     margin-top: 10px;
     padding: 10px;
-    background: rgba(206, 153, 155, 0.1);
+    background: rgba(167, 153, 206, 0.1);
     border-radius: 5px;
-    border-left: 4px solid #546581;
+    border-left: 4px solid #1E1B2E;
 }
 
 .section {
     margin-bottom: 30px;
-    background: #3e2e2e;
+    background: #443966;
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -190,20 +190,20 @@
     font-weight: 600;
     margin-bottom: 15px;
     padding-bottom: 8px;
-    border-bottom:  2px solid #CE999B;
-    color: #CE999B;
+    border-bottom:  2px solid #F3F0FF;
+    color: #F3F0FF;
     display: flex;
     justify-content: center
 }
 
 .section:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(136, 100, 101, 0.2);
+    box-shadow: 0 5px 20px rgba(128, 114, 153, 0.205)
 }
 
 .star {
     position: absolute;
-    background: #FCB5B7;
+    background: #F3F0FF;
     border-radius: 50%;
     animation: twinkle var(--duration) ease-in-out infinite;
 }
@@ -216,8 +216,8 @@
 }
 
 .switch-btn {
-    background: #546581;
-    color: #FCB5B7;
+    background: #1E1B2E;
+    color: #F3F0FF;
     border: none;
     transition: all 0.3s ease;
     border-radius: 25px;
@@ -226,13 +226,13 @@
 
 .switch-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(84, 101, 129, 0.3);
-    background: #3A4A6B;
+    box-shadow: 0 4px 8px rgba(104, 84, 129, 0.3);
+    background: #2A2342;
 }
 
 .switch-btn.active {
-    background: #CE999B;
-    color: #311E1E;
+    background: #beb1f1;
+    color: #251e31;
 }
 
 .tooltip {
@@ -240,7 +240,7 @@
     bottom: 100%;
     left: 50%;
     transform: translate(-50%, -8px);
-    background: rgba(136, 100, 101, 0.95);
+    background: rgba(110, 100, 136, 0.95);
     color: white;
     padding: 8px 12px;
     border-radius: 8px;
@@ -260,7 +260,7 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: rgba(136, 100, 101, 0.95) transparent transparent transparent;
+    border-color: rgba(110, 100, 136, 0.95) transparent transparent transparent;
 }
 
 /* Анимации остаются без изменений */
@@ -349,12 +349,12 @@
 }
 
 #analysisContent::-webkit-scrollbar-thumb {
-    background: #CE999B;
+    background: #F3F0FF;
     border-radius: 4px;
 }
 
 #analysisContent::-webkit-scrollbar-track {
-    background: rgba(206, 153, 155, 0.1);
+    background: rgba(172, 153, 206, 0.1);
     border-radius: 4px;
 }
 
@@ -372,8 +372,8 @@
     left: 0;
     height: 22px;
     width: 22px;
-    background-color: #546581;
-    border: 2px solid #886465;
+    background-color: #1E1B2E;
+    border: 2px solid #6e6488;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
@@ -386,14 +386,14 @@
     top: 3px;
     width: 5px;
     height: 10px;
-    border: solid #FCB5B7;
+    border: solid #F3F0FF;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
 
 #checkboxes input:checked~.checkbox-custom {
-    background-color: #CE999B;
-    border-color: #CE999B;
+    background-color: #F3F0FF;
+    border-color: #F3F0FF;
 }
 
 #checkboxes input:checked~.checkbox-custom:after {
@@ -418,7 +418,7 @@
 }
 
 #checkboxes label:hover .checkbox-custom {
-    border-color: #CE999B;
+    border-color: #F3F0FF;
     transform: scale(1.05);
 }
 
@@ -429,7 +429,7 @@
 }
 
 #menstruation-list .section-title::before {
-    background: #CE999B;
+    background: #F3F0FF;
 }
 
 #overlay {
@@ -442,30 +442,31 @@
 }
 
 #ovulation-list .section-title::before {
-    background: #FCB5B7;
+    background: #F3F0FF;
 }
 
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background-color: #546581;
-    color: #FCB5B7;
+    background-color: #1E1B2E;
+    color: #F3F0FF;
     min-height: 100vh;
     overflow: hidden;
+    user-select: none;
 }
 
 button {
     padding: 8px 12px;
     cursor: pointer;
-    background: #546581;
-    color: #FCB5B7;
+    background: #6c5d9d;
+    color: #F3F0FF;
     border: none;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
 
 button:hover {
-    background: #3A4A6B;
+    background: #927ed4;
 }
 
 canvas {
@@ -476,11 +477,11 @@ canvas {
 h1 {
     font-size: 2.4em;
     text-align: center;
-    color: #CE999B;
+    color: #F3F0FF;
     position: relative;
     z-index: 1;
     font-weight: 600;
-    text-shadow: 0 2px 4px rgba(206, 153, 155, 0.3);
+    text-shadow: 0 2px 4px rgba(171 153 206 / 30%);
     font-weight: bold;
 }
 
@@ -491,7 +492,7 @@ h1::after {
     left: 50%;
     width: 160%;
     height: 160%;
-    background: radial-gradient(circle, rgba(206, 153, 155, 0.2) 10%, transparent 70%);
+    background: radial-gradient(circle, rgba(120, 99, 156, 0.288) 10%, transparent 70%);
     transform: translate(-50%, -50%);
     border-radius: 50%;
     z-index: -1;
@@ -511,13 +512,13 @@ li {
     opacity: 0;
     animation: fadeInList 0.6s ease-out forwards;
     z-index: 1;
-    color: #FCB5B7;
-    background: #4c3737;
+    color: #F3F0FF;
+    background: #514478;
 }
 
 li:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(136, 100, 101, 0.2);
+    box-shadow: 0 5px 20px rgba(151, 133, 182, 0.781);
     z-index: 10;
 }
 
@@ -534,7 +535,7 @@ li:nth-child(odd) {
 }
 
 span {
-    color: #CE999B;
+    color: #F3F0FF;
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -567,7 +568,7 @@ ul {
 }
 
 .close-btn:hover {
-    background: rgba(206, 153, 155, 0.2);
+    background: rgba(0 0 0 / 23%);
 }
 
 .close-btn svg {
@@ -595,7 +596,7 @@ ul {
 }
 
 .expand-btn:hover {
-    background: rgba(206, 153, 155, 0.2);
+    background: rgba(0 0 0 / 23%);
 }
 
 .expand-btn svg {
@@ -610,8 +611,8 @@ ul {
 
 .collapse-icon {
     opacity: 0;
-  
-}
+    transition: opacity 0.3s ease;
+  }
 
 .modal-content.expanded .expand-icon {
     opacity: 0;
@@ -635,11 +636,11 @@ ul {
 }
 
 :root {
-    --space-dark: #1A1111;
-    --neon-purple: #CE999B;
-    --stardust: #FCB5B7;
-    --deep-space: #311E1E;
-    --nebula: #886465;
+    --space-dark: #15111a;
+    --neon-purple: #F3F0FF;
+    --stardust: #F3F0FF;
+    --deep-space: #251e31;
+    --nebula: #726488;
 }
 
 
@@ -676,8 +677,8 @@ ul {
 }
 
 .chart-wrapper {
-    background: #3A2A2A;
-    box-shadow: 0 0 15px rgba(206, 153, 155, 0.2);
+    background: #362d52;
+    box-shadow: 0 0 15px rgba(0 0 0 / 23%);
     border-radius: 1rem;
     padding: 1rem;
     margin: 1rem 0;
@@ -700,11 +701,11 @@ ul {
     background: rgba(49, 30, 30, 0.9);
     padding: 30px;
     border-radius: 24px;
-    box-shadow: 0 12px 30px rgba(136, 100, 101, 0.2);
+    box-shadow: 0 12px 30px rgba(117, 100, 136, 0.2);
     position: relative;
     overflow: visible;
     backdrop-filter: blur(5px);
-    border: 1px solid #886465;
+    border: 1px solid #726488;
     animation: fadeIn 0.8s ease-out;
 }
 
@@ -757,8 +758,8 @@ ul {
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    border: 2px solid #CE999B; /* Яркий бортик */
-    background-color: rgba(206, 153, 155, 0.2); /* Бледный фон */
+    border: 2px solid #F3F0FF; /* Яркий бортик */
+    background-color: rgba(0 0 0 / 23%); /* Бледный фон */
     transition: all 0.3s ease;
     box-sizing: border-box;
     will-change: transform, background-color; /* Оптимизация анимации */
@@ -788,7 +789,7 @@ ul {
 /* Выбранное состояние */
 .checkbox-label input:checked ~ .color-marker {
     transform: scale(1.15);
-    box-shadow: 0 0 8px rgba(206, 153, 155, 0.7);
+    box-shadow: 0 0 8px rgba(173, 153, 206, 0.7);
 }
 
 /* Имя участника */
@@ -800,7 +801,7 @@ ul {
 
 /* Изменение имени при выборе */
 .checkbox-label input:checked ~ .participant-name {
-    text-shadow: 0 0 3px rgba(206, 153, 155, 0.3);
+    text-shadow: 0 0 3px rgba(173, 153, 206, 0.3);
 }
 
 /* Основной блок вывода */
@@ -818,20 +819,20 @@ ul {
 }
 
 .conclusion::-webkit-scrollbar-track {
-    background: rgba(206, 153, 155, 0.1);
+    background: rgba(173, 153, 206, 0.1);
 }
 
 .conclusion::-webkit-scrollbar-thumb {
-    background: #CE999B;
+    background: #F3F0FF;
     border-radius: 3px;
 }
 
 /* Заголовки */
 .conclusion h3 {
-    color: #CE999B;
+    color: #F3F0FF;
     margin: 20px 0 12px 0;
     padding-bottom: 6px;
-    border-bottom: 2px solid rgba(206, 153, 155, 0.3);
+    border-bottom: 2px solid rgba(178, 153, 206, 0.3);
     font-size: 1.2em;
 }
 
@@ -845,7 +846,7 @@ ul {
 
 .conclusion h4,
 .conclusion h5 {
-    color: #FCB5B7;
+    color: #F3F0FF;
     margin: 16px 0 8px 0;
     font-size: 1.1em;
 }
@@ -858,27 +859,27 @@ ul {
 
 /* Специальные блоки */
 .conclusion .general-conclusion {
-    background: rgba(206, 153, 155, 0.1);
+    background: rgba(172, 153, 206, 0.1);
     padding: 16px;
     border-radius: 12px;
     margin: 15px 0;
-    border-left: 4px solid #CE999B;
+    border-left: 4px solid #F3F0FF;
 }
 
 .conclusion .participant-info {
-    background: rgba(206, 153, 155, 0.1);
+    background: rgba(178, 153, 206, 0.1);
     padding: 14px;
     margin: 12px 0;
     border-radius: 10px;
-    border-left: 3px solid #886465;
+    border-left: 3px solid #6e6488;
     transition: all 0.2s ease;
 }
 
 /* Выделенные элементы */
 .conclusion .highlight {
-    color: #CE999B;
+    color: #F3F0FF;
     font-weight: 600;
-    background-color: rgba(206, 153, 155, 0.3);
+    background-color: rgba(172, 153, 206, 0.3);
     padding: 2px 6px;
     border-radius: 4px;
     display: inline-block;
@@ -886,9 +887,9 @@ ul {
 
 /* Статистическая значимость */
 .conclusion .significant {
-    color: #FCB5B7;
+    color: #F3F0FF;
     font-weight: 600;
-    background: rgba(136, 100, 101, 0.2);
+    background: rgba(117, 100, 136, 0.2);
     padding: 8px 12px;
     border-radius: 8px;
     display: inline-block;
@@ -898,10 +899,10 @@ ul {
 /* Сноска */
 .conclusion .disclaimer {
     font-size: 0.85em;
-    color: #CE999B;
+    color: #F3F0FF;
     margin-top: 15px;
     font-style: italic;
-    border-top: 1px dashed rgba(206, 153, 155, 0.3);
+    border-top: 1px dashed rgba(173, 153, 206, 0.3);
     padding-top: 10px;
 }
 
@@ -919,8 +920,8 @@ ul {
     }
 
     .chart-wrapper {
-        background: #3A2A2A;
-        box-shadow: 0 0 15px rgba(206, 153, 155, 0.2);
+        background: #362d52;
+        box-shadow: 0 0 15px rgba(0 0 0 / 23%);
         flex: 1 1 100%;
     }
 
@@ -953,20 +954,20 @@ ul {
     left: 0;
     height: 22px;
     width: 22px;
-    background-color: #546581;
-    border: 2px solid #886465;
+    background-color: #1E1B2E;
+    border: 2px solid #756488;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
 
 .checkbox-group label:hover .checkbox-custom {
-    border-color: #CE999B;
+    border-color: #F3F0FF;
     transform: scale(1.05);
 }
 
 .checkbox-group input:checked~.checkbox-custom {
-    background-color: #CE999B;
-    border-color: #CE999B;
+    background-color: #F3F0FF;
+    border-color: #F3F0FF;
 }
 
 .checkbox-custom:after {
@@ -977,7 +978,7 @@ ul {
     top: 3px;
     width: 5px;
     height: 10px;
-    border: solid #FCB5B7;
+    border: solid #F3F0FF;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 }
@@ -1001,16 +1002,13 @@ ul {
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.2s ease;
-    border: none;
-    background: #546581;
-    color: #FCB5B7;
-    box-shadow: 0 2px 8px rgba(84, 101, 129, 0.2);
+    color: #F3F0FF;
+    box-shadow: 0 2px 8px rgba(100, 84, 129, 0.2);
 }
 
 .button-group button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(84, 101, 129, 0.3);
-    background: #3A4A6B;
+    box-shadow: 0 4px 12px rgba(100, 84, 129, 0.3);
 }
 
 .button-group button:active {

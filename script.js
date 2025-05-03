@@ -382,7 +382,7 @@ function setupCheckboxes() {
       marker.style.backgroundColor = participant.color;
       marker.style.transform = 'scale(1.15)';
     } else {
-      marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+      marker.style.backgroundColor = 'rgba(0 0 0 / 23%)';
       marker.style.transform = 'scale(1)';
     }
     
@@ -391,7 +391,7 @@ function setupCheckboxes() {
         marker.style.backgroundColor = participant.color;
         marker.style.transform = 'scale(1.15)';
       } else {
-        marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+        marker.style.backgroundColor = 'rgba(0 0 0 / 23%)';
         marker.style.transform = 'scale(1)';
       }
       drawCycleChart(document.getElementById('main-date').value);
@@ -733,7 +733,7 @@ function setupParticipantsCheckboxes() {
         marker.style.backgroundColor = participant.color;
         marker.style.transform = 'scale(1.15)';
       } else {
-        marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+        marker.style.backgroundColor = 'rgba(0 0 0 / 23%)';
         marker.style.transform = 'scale(1)';
       }
     };
@@ -796,7 +796,7 @@ deselectAllBtn.addEventListener('click', () => {
     checkbox.checked = false;
     const marker = checkbox.parentElement.querySelector('.color-marker');
     if (marker) {
-      marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+      marker.style.backgroundColor = 'rgba(0 0 0 / 23%)';
       marker.style.transform = 'scale(1)';
     }
   });
@@ -852,8 +852,12 @@ function openAnalysisModal() {
   
   // Добавляем обработчик для кнопки развертывания
   document.getElementById('toggleExpandBtn').onclick = function() {
-      const modalContent = document.querySelector('#analysisModal .modal-content');
-      modalContent.classList.toggle('expanded');
+    const modalContent = document.querySelector('#analysisModal .modal-content');
+    const isExpanded = modalContent.classList.toggle('expanded');
+  
+    // Переключаем SVG (исправленные селекторы)
+    document.querySelector('.expand-icon').style.display = isExpanded ? 'none' : 'inline';
+    document.querySelector('.collapse-icon').style.display = isExpanded ? 'inline' : 'none';
   };
 }
 
@@ -904,7 +908,7 @@ function deselectAllCycle() {
     checkbox.checked = false;
     const marker = checkbox.parentElement.querySelector('.color-marker');
     if (marker) {
-      marker.style.backgroundColor = 'rgba(206, 153, 155, 0.2)';
+      marker.style.backgroundColor = 'rgba(0 0 0 / 23%)';
       marker.style.transform = 'scale(1)';
     }
   });
